@@ -11,6 +11,7 @@ import Logo from '@/assest/logo.png'
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
+  const [imageURL, setImageURL] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -27,7 +28,7 @@ export default function RegisterPage() {
 
   // Password validation
   const hasUppercase = /[A-Z]/.test(password);
-  const hasNumber = /[0-9]/.test(password);
+  const hasLowercase = /[a-z]/.test(password);
   const hasMinLength = password.length >= 6;
 
   // Confirm password
@@ -35,7 +36,7 @@ export default function RegisterPage() {
 
   // All validation
   const isFormValid =
-    validEmail && hasUppercase && hasNumber && hasMinLength && passwordMatch;
+    validEmail && hasUppercase && hasLowercase && hasMinLength && passwordMatch;
 
     const router = useRouter()
   // Submit function
@@ -53,6 +54,7 @@ export default function RegisterPage() {
       const userData = {
         name,
         email,
+        imageURL,
         password,
       };
 
@@ -61,6 +63,7 @@ export default function RegisterPage() {
         toast.success("Registration successful!");
         setName('')
         setEmail('')
+        setImageURL('')
         setPassword("")
         setConfirmPassword('') 
         router.push("/login");
@@ -82,12 +85,10 @@ export default function RegisterPage() {
   }
   return (
     <section className="bg-bg">
-
       <div className="w-lg bg-white mx-auto mt-20 p-6 border rounded-xl">
-
         <Image src={Logo} alt="logo" width={40} height={40}></Image>
 
-        <h1 className="text-2xl font-bold ">Create Account</h1>
+        <h1 className="text-2xl font-bold font-secondary">Create Account</h1>
 
         <p className="mt-1 mb-5 text-sm text-stone-500">
           Enter your information to become part of our community.
@@ -100,7 +101,7 @@ export default function RegisterPage() {
 
             <input
               type="text"
-              placeholder="Enter your email"
+              placeholder="John Doe"
               value={name}
               onChange={(e) => setName(e.target.value)}
               className="w-full border p-3 rounded-lg mt-2"
@@ -108,11 +109,11 @@ export default function RegisterPage() {
           </div>
           {/* Email */}
           <div className="mb-5">
-            <label>Email Address</label>
+            <label>Email</label>
 
             <input
               type="email"
-              placeholder="Enter your email"
+              placeholder="example@gmail.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full border p-3 rounded-lg mt-2"
@@ -124,6 +125,19 @@ export default function RegisterPage() {
                 {validEmail ? "✓ Valid email" : "✗ Invalid email"}
               </p>
             )}
+          </div>
+          {/* Image URL */}
+          <div className="mb-5">
+            <label>Image Url</label>
+
+            <input
+              type="text"
+              placeholder="https://example.com/your-image"
+              value={imageURL}
+              onChange={(e) => setImageURL(e.target.value)}
+              className="w-full border p-3 rounded-lg mt-2"
+              autoCapitalize="email"
+            />
           </div>
 
           {/* Password */}
@@ -157,17 +171,17 @@ export default function RegisterPage() {
                     : "text-red-500 text-[10px]"
                 }
               >
-                {hasUppercase ? "✓" : "✗"} At least 1 uppercase letter
+                {hasUppercase ? "✓" : "x"} At least 1 uppercase letter
               </p>
 
               <p
                 className={
-                  hasNumber
+                  hasLowercase
                     ? "text-green-600 text-[10px]"
                     : "text-red-500 text-[10px]"
                 }
               >
-                {hasNumber ? "✓" : "✗"} At least 1 number
+                {hasLowercase ? "✓" : "x"} At least 1 lowercase letter
               </p>
 
               <p
@@ -177,7 +191,7 @@ export default function RegisterPage() {
                     : "text-red-500 text-[10px]"
                 }
               >
-                {hasMinLength ? "✓" : "✗"} Minimum 6 characters
+                {hasMinLength ? "✓" : "x"} Minimum 6 characters
               </p>
             </div>
           </div>
