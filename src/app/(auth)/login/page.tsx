@@ -1,8 +1,30 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
-import Logo from '@/assest/logo.png'
+import Logo from "@/assest/logo.png";
+import { FormEvent } from "react";
+import { signIn } from "@/lib/auth-client";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
+  const router = useRouter();
+  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    const userData = Object.fromEntries(formData.entries()) as {
+      email: string;
+      password: string;
+    };
+
+    const { data } = await signIn.email(userData);
+    if (data) {
+      toast.success("Successfully logged in");
+      form.reset();
+      router.push("/");
+    }
+  };
   return (
     <div className="flex min-h-screen items-center justify-center bg-stone-100 px-4">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-sm ring-1 ring-stone-200">
@@ -14,7 +36,7 @@ const LoginPage = () => {
           Enter your email and password to continue.
         </p>
 
-        <form className="mt-8 space-y-5">
+        <form className="mt-8 space-y-5" onSubmit={handleLogin}>
           <div>
             <label
               htmlFor="email"
