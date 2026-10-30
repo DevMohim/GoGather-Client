@@ -1,8 +1,13 @@
 "use client";
 
+import { signUp } from "@/lib/auth-client";
 import { Eye, EyeClosed, EyeClosedIcon } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
+import toast from "react-hot-toast";
+import Logo from '@/assest/logo.png'
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -32,8 +37,9 @@ export default function RegisterPage() {
   const isFormValid =
     validEmail && hasUppercase && hasNumber && hasMinLength && passwordMatch;
 
+    const router = useRouter()
   // Submit function
-  const handleSubmit = async (e : FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!isFormValid || loading) return;
@@ -44,13 +50,21 @@ export default function RegisterPage() {
       // Temporary loading simulation
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      console.log({
-         name,
+      const userData = {
+        name,
         email,
         password,
-      });
+      };
 
-      alert("Registration successful!");
+      const { data } = await signUp.email(userData);
+      if (data) {
+        toast.success("Registration successful!");
+        setName('')
+        setEmail('')
+        setPassword("")
+        setConfirmPassword('') 
+        router.push("/login");
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -61,7 +75,11 @@ export default function RegisterPage() {
   return (
     <section className="bg-bg">
       <div className="w-lg bg-white mx-auto mt-20 p-6 border rounded-xl">
-        <h1 className="text-2xl font-bold mb-5">Create Account</h1>
+        <Image src={Logo} alt="logo" width={40} height={40}></Image>
+        <h1 className="text-2xl font-bold ">Create Account</h1>
+        <p className="mt-1 mb-5 text-sm text-stone-500">
+          Enter your information to become part of our community.
+        </p>
 
         <form onSubmit={handleSubmit}>
           {/* Name */}

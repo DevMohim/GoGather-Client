@@ -1,11 +1,14 @@
+import Image from "next/image";
 import Link from "next/link";
+import Logo from '@/assest/logo.png'
 
 const LoginPage = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-stone-100 px-4">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-sm ring-1 ring-stone-200">
+        <Image src={Logo} alt="logo" width={40} height={40}></Image>
         <h1 className="text-2xl font-semibold text-stone-900 font-secondary">
-          Log in
+          Welcome Back
         </h1>
         <p className="mt-1 text-sm text-stone-500">
           Enter your email and password to continue.

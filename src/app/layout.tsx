@@ -3,6 +3,7 @@ import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/layout/Navbar";
+import { Toaster } from 'react-hot-toast'
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <Navbar />
         {children}
+        <Toaster />
       </body>
     </html>
   );
