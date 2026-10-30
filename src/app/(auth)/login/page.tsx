@@ -8,7 +8,9 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
+
   const router = useRouter();
+
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
@@ -25,8 +27,19 @@ const LoginPage = () => {
       router.push("/");
     }
   };
+
+  const handleGoogleLogin = async() => {
+    const data = await signIn.social({
+      provider: 'google'
+    })
+    if (data) {
+      router.push("/");
+    }
+  }
+
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-stone-100 px-4">
+    <div className="flex min-h-screen items-center justify-center bg-stone-100 px-4 py-10">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-sm ring-1 ring-stone-200">
         <Image src={Logo} alt="logo" width={40} height={40}></Image>
         <h1 className="text-2xl font-semibold text-stone-900 font-secondary">
@@ -87,7 +100,8 @@ const LoginPage = () => {
 
         <button
           type="button"
-          className="flex w-full items-center justify-center gap-3 rounded-lg border border-stone-300 bg-white px-4 py-2.5 text-sm font-medium text-stone-700 transition hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2"
+          onClick={handleGoogleLogin}
+          className="flex w-full items-center justify-center gap-3 rounded-lg border border-stone-300 bg-white px-4 py-2.5 text-sm font-medium text-stone-700 transition hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2 cursor-pointer"
         >
           <svg className="h-5 w-5" viewBox="0 0 48 48" aria-hidden="true">
             <path

@@ -1,6 +1,6 @@
 "use client";
 
-import { signUp } from "@/lib/auth-client";
+import { signIn, signUp } from "@/lib/auth-client";
 import { Eye, EyeClosed, EyeClosedIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -72,11 +72,23 @@ export default function RegisterPage() {
     }
   };
 
+  const handleGoogleLogin = async() => {
+    const data = await signIn.social({
+      provider:'google'
+    })
+    if (data) {
+      router.push("/");
+    }
+  }
   return (
     <section className="bg-bg">
+
       <div className="w-lg bg-white mx-auto mt-20 p-6 border rounded-xl">
+
         <Image src={Logo} alt="logo" width={40} height={40}></Image>
+
         <h1 className="text-2xl font-bold ">Create Account</h1>
+
         <p className="mt-1 mb-5 text-sm text-stone-500">
           Enter your information to become part of our community.
         </p>
@@ -218,6 +230,7 @@ export default function RegisterPage() {
 
         <button
           type="button"
+          onClick={handleGoogleLogin}
           className="flex w-full items-center justify-center gap-3 rounded-lg border border-stone-300 bg-white px-4 py-2.5 text-sm font-medium text-stone-700 transition hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2 cursor-pointer"
         >
           <svg className="h-5 w-5" viewBox="0 0 48 48" aria-hidden="true">

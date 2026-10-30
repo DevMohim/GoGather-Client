@@ -78,7 +78,7 @@ const Navbar = () => {
 
         {/* Actions */}
         <div className="flex items-center gap-2">
-          <Link href='/login'>
+          <Link href="/login">
             <Button
               size="lg"
               className="hidden rounded-full bg-linear-to-r from-[#F28C45] to-[#D96A2B] px-5 pb-1 text-white shadow-sm transition-all duration-300 hover:from-[#E77A35] hover:to-secondery hover:shadow-md md:inline-flex cursor-pointer"
@@ -90,7 +90,7 @@ const Navbar = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="md:hidden cursor-pointer"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             onClick={() => setOpen((v) => !v)}
@@ -130,8 +130,9 @@ const Navbar = () => {
           })}
           <li className="mt-1">
             <Button
-              className="w-full rounded-full"
+              className="w-full rounded-full bg-linear-to-r from-[#F28C45] to-[#D96A2B]"
               size="lg"
+              nativeButton={false}
               render={<Link href="/login" />}
             >
               Login
