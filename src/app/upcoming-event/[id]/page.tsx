@@ -1,7 +1,6 @@
 
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, CalendarDays, Mail, MapPin, Ticket } from "lucide-react";
+import { CalendarDays, Mail, MapPin, Ticket } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -106,6 +105,7 @@ const EventDetailsPage = async ({
                 </CardHeader>
                 <CardContent className="flex items-center gap-4">
                   <Avatar className="h-14 w-14">
+                     {/* avatar image */}
                     <AvatarFallback className="text-lg font-semibold">
                       {creatorInitials}
                     </AvatarFallback>

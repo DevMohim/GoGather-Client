@@ -87,7 +87,7 @@ const UserMenuShow = ({ user }: UserMenuShowProps) => {
             </Button>
           </Link>
 
-          <Link href="/dashboard/manage-facilities">
+          <Link href="/manage-event">
             <Button
               type="button"
               variant="ghost"
