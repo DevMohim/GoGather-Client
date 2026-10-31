@@ -1,10 +1,12 @@
 'use client'
 import Image from "next/image";
-import { CalendarDays, MapPin, Pen } from "lucide-react";
+import { CalendarDays, MapPin } from "lucide-react";
 import { IEvent } from "@/types/Events.type";
 import { Button } from "@/components/ui/button";
 
 import EventDeleteDialog from "./EventDeleteDialog";
+import EventEditDialog from "./EventEditDialog";
+import Link from "next/link";
 
 
 const MyEventCard = ({ event }: { event: IEvent }) => {
@@ -94,20 +96,15 @@ const MyEventCard = ({ event }: { event: IEvent }) => {
             <span className="truncate">{event.eventLocation}</span>
           </li>
         </ul>
-
       </div>
 
       {/* View details */}
-      <div className="px-6 pb-6 flex items-center gap-8">
-        <Button
-          size="lg"
-          className="w-[45%] rounded-full gap-2 px-6 btn-gradient cursor-pointer"
-          aria-label={`View details for ${event.eventTitle}`}
-        >
-          <Pen /> Edit
-        </Button>
-        <EventDeleteDialog event={event}/>
-        
+      <div className="px-6 pb-6 flex items-center gap-2 justify-end">
+        <Link href={`/upcoming-event/${event._id}`}>
+          <Button size="sm" className='cursor-pointer px-7' variant='outline'>View Details</Button>
+        </Link>
+        <EventEditDialog event={event} />
+        <EventDeleteDialog event={event} />
       </div>
     </article>
   );

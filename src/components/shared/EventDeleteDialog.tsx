@@ -40,8 +40,8 @@ const EventDeleteDialog = ({ event }: { event: IEvent }) => {
         <AlertDialogTrigger
           render={
             <Button
-              size="lg"
-              className="w-full rounded-full gap-2 px-6 cursor-pointer"
+              size="sm"
+              className="rounded-full gap-2 px-6 cursor-pointer"
               variant="destructive"
               aria-label={`View details for ${event.eventTitle}`}
             >

@@ -12,13 +12,25 @@ const ManageEventPage = async() => {
       headers: await headers()
    })
    const user = sessionData?.user
-   console.log(user)
 
    const res = await fetch(
      `${process.env.NEXT_PUBLIC_API_URL}/my-events/${user?.email}`,
    );
    const myEvents = await res.json() as IEvent[]
-   console.log(myEvents)
+   
+   const today = new Date();
+   today.setHours(0, 0, 0, 0);
+
+   const sortedEvents = Array.isArray(myEvents)
+     ? myEvents
+         .filter((event) => new Date(`${event.eventDate}T00:00:00`) >= today)
+         .sort((a, b) => {
+           const dateA = new Date(`${a.eventDate}T00:00:00`).getTime();
+           const dateB = new Date(`${b.eventDate}T00:00:00`).getTime();
+
+           return dateA - dateB;
+         })
+     : [];
    
    return (
      <main className="relative overflow-hidden bg-bg">
@@ -49,9 +61,9 @@ const ManageEventPage = async() => {
        </div>
 
        <div className="container mx-auto px-4 pb-24 sm:px-6 lg:px-8">
-         {myEvents.length > 0 ? (
+         {sortedEvents.length > 0 ? (
            <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-8">
-             {myEvents.map((event) => (
+             {sortedEvents.map((event) => (
                <MyEventCard key={event._id} event={event} />
              ))}
            </div>
@@ -63,6 +75,17 @@ const ManageEventPage = async() => {
              <h3 className="font-heading mt-5 text-lg font-semibold tracking-tight">
                You do not have any event to manage. First creat an event.
              </h3>
+
+             <div className='mt-5'>
+               <Link href="/create-event">
+                 <Button
+                   size="lg"
+                   className="w-full sm:w-auto btn-gradient cursor-pointer"
+                 >
+                   <PlusCircle className="mr-2 h-5 w-5" /> Create Event
+                 </Button>
+               </Link>
+             </div>
            </div>
          )}
        </div>
