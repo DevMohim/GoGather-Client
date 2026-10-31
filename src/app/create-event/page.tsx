@@ -19,6 +19,9 @@ import { Textarea } from "@/components/ui/textarea";
 import Logo from '@/assest/logo.png'
 import Image from "next/image";
 import { FormEvent } from "react";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
+import { useSession } from "@/lib/auth-client";
 
 
 const today = new Date()
@@ -29,20 +32,45 @@ const minDate = [
 ].join('-')
 
 const CreateEventPage = () => {
+   const {data :  session } = useSession()
+   const user = session?.user
 
    const handleCreateEvent = async(e: FormEvent<HTMLFormElement>) => {
       e.preventDefault()
       const form = e.currentTarget
       const formData = new FormData(form)
       const eventDate = formData.get('eventDate')
-      const newEventData = Object.fromEntries(formData.entries())
-
+   
       if (typeof eventDate === 'string' && eventDate < minDate) {
          return;
       }
-      
-      console.log(newEventData)
-      
+      const EventData = Object.fromEntries(formData.entries())
+      const newEventData = {
+         ...EventData,
+          eventCreatorName : user?.name,
+          eventCreatorEmail : user?.email 
+      }
+
+
+
+
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events` , {
+         method : "POST",
+         headers : {
+            "Content-Type" : "application/json"
+         },
+         body : JSON.stringify(newEventData)
+      });
+      if(!res.ok) {
+         console.log('create new events failed due to api error')
+      }
+      const postRes = await res.json()
+      if(postRes){
+         toast.success("Event Added Successfully")
+         form.reset()
+         redirect('/upcoming-event')
+      }
+      console.log(postRes)
    }
 
 
