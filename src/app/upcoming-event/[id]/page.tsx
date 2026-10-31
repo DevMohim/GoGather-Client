@@ -1,15 +1,12 @@
 
 import { notFound } from "next/navigation";
-import { CalendarDays, Mail, MapPin, Ticket } from "lucide-react";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { ArrowLeft } from "lucide-react";
+
+
 import Image from "next/image";
 import { IEvent } from "@/types/Events.type";
-import BacktoHomepageBtn from "@/components/shared/BacktoHomepageBtn";
 import JoinedButton from "@/components/shared/JoinedButton";
+import Link from "next/link";
 
 const EventDetailsPage = async ({
   params,
@@ -28,7 +25,15 @@ const EventDetailsPage = async ({
   return (
     <div className="min-h-screen bg-muted/40">
       <div className="mx-auto max-w-6xl px-4 py-10">
-        <BacktoHomepageBtn />
+        <div className="px-8 py-4">
+          <Link
+            href="/upcoming-event"
+            className="inline-flex items-center gap-1.5 font-medium text-muted-foreground transition-colors hover:text-primery text-[10px]"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to upcoming events
+          </Link>
+        </div>
 
         {/* Big thumbnail image */}
         <div className="mt-6 overflow-hidden rounded-2xl border bg-muted">
@@ -48,8 +53,6 @@ const EventDetailsPage = async ({
         </div>
 
         <JoinedButton eventInfo={eventInfo} />
-
-        
       </div>
     </div>
   );

@@ -5,13 +5,23 @@ import { IEvent } from "@/types/Events.type";
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useSession } from "@/lib/auth-client";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+type JoinedUser = {
+  email?: string;
+  [key: string]: unknown;
+};
 
 const JoinedButton = ({ eventInfo }: { eventInfo: IEvent }) => {
-   const [joinedBtnClick, setJoinedBtnClick] =useState(false)
+  const [joinedUsers, setJoinedUsers] = useState<JoinedUser[]>([]);
+  const [isJoining, setIsJoining] = useState(false);
+
+  const { data: session } = useSession();
+  const userInfo = session?.user;
+
   const formattedDate = new Date(eventInfo.eventDate).toLocaleDateString(
     "en-US",
     {
@@ -22,9 +32,6 @@ const JoinedButton = ({ eventInfo }: { eventInfo: IEvent }) => {
     },
   );
 
-  const { data: session } = useSession();
-  const userInfo = session?.user;
-
   const creatorInitials = eventInfo.eventCreatorName
     .split(" ")
     .map((word) => word[0])
@@ -32,28 +39,76 @@ const JoinedButton = ({ eventInfo }: { eventInfo: IEvent }) => {
     .join("")
     .toUpperCase();
 
-  const joinedData = {
-    ...eventInfo,
-    ...userInfo,
-  };
+  useEffect(() => {
+    let cancelled = false;
+
+    const loadJoinedUsers = async () => {
+      try {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/joined-events/${eventInfo._id}`,
+        );
+        if (!res.ok) throw new Error("Could not load joined users");
+
+        const data: JoinedUser[] = await res.json();
+        if (!cancelled) setJoinedUsers(data);
+      } catch (error) {
+        console.error("Could not load joined users:", error);
+      }
+    };
+
+    loadJoinedUsers();
+    return () => {
+      cancelled = true;
+    };
+  }, [eventInfo._id]);
+
+  const joinedCount = joinedUsers.length;
+
+  const alreadyJoined = joinedUsers.some(
+    (user) => user.email && user.email === userInfo?.email,
+  );
 
   const handleJoinEvent = async () => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/joined-events`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(joinedData),
-      },
-    );
-    if (!res.ok) {
-      console.error("Event Joined failed:", res.status);
-      toast.error("Joined failed");
+    if (!userInfo) {
+      toast.error("Please login to join this event");
       return;
     }
 
-    setJoinedBtnClick(true)
-    toast.success("Joined successful");
+    const { _id, ...eventData } = eventInfo;
+    const joinedData = {
+      ...eventData,
+      eventId: _id,
+      userId: userInfo.id,
+      name: userInfo.name,
+      email: userInfo.email,
+      image: userInfo.image,
+    };
+
+    try {
+      setIsJoining(true);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/joined-events`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(joinedData),
+        },
+      );
+
+      if (!res.ok) {
+        console.error("Event Joined failed:", res.status);
+        toast.error("Joined failed");
+        return;
+      }
+
+      setJoinedUsers((prev) => [...prev, joinedData]);
+      toast.success("Joined successful");
+    } catch (error) {
+      console.error("Event Joined failed:", error);
+      toast.error("Joined failed");
+    } finally {
+      setIsJoining(false);
+    }
   };
 
   return (
@@ -66,7 +121,9 @@ const JoinedButton = ({ eventInfo }: { eventInfo: IEvent }) => {
           </Badge>
 
           <p className="text-sm font-primary px-2 mt-2 font-semibold">
-            3 people joined this event
+            {joinedCount === 0
+              ? "Be the first to join this event"
+              : `${joinedCount} ${joinedCount === 1 ? "person has" : "people have"} joined this event`}
           </p>
 
           <h1 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl font-secondary">
@@ -98,10 +155,10 @@ const JoinedButton = ({ eventInfo }: { eventInfo: IEvent }) => {
             size="lg"
             className="w-full btn-gradient cursor-pointer disabled:cursor-not-allowed"
             onClick={handleJoinEvent}
-            disabled={joinedBtnClick}
+            disabled={alreadyJoined || isJoining}
           >
             <Ticket className="mr-2 h-5 w-5" />
-            {joinedBtnClick ? "Joined" : "Join event"}
+            {alreadyJoined ? "Joined" : isJoining ? "Joining..." : "Join event"}
           </Button>
           <div className="space-y-6 lg:sticky lg:top-6">
             <Card>
@@ -110,7 +167,7 @@ const JoinedButton = ({ eventInfo }: { eventInfo: IEvent }) => {
               </CardHeader>
               <CardContent className="flex items-center gap-4">
                 <Avatar className="h-14 w-14">
-                  {/* avatar image */}
+                  <AvatarImage src={eventInfo.eventCreatorImage} />
                   <AvatarFallback className="text-lg font-semibold">
                     {creatorInitials}
                   </AvatarFallback>
