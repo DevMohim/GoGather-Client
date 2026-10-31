@@ -76,7 +76,7 @@ const UserMenuShow = ({ user }: UserMenuShowProps) => {
             Profile
           </Button>
 
-          <Link href="/dashboard/my-booking">
+          <Link href="/create-event">
             <Button
               type="button"
               variant="ghost"
