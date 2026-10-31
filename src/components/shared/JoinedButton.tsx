@@ -82,6 +82,7 @@ const JoinedButton = ({ eventInfo }: { eventInfo: IEvent }) => {
       name: userInfo.name,
       email: userInfo.email,
       image: userInfo.image,
+      joinDate : new Date()
     };
 
     try {

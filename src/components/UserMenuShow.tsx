@@ -98,14 +98,16 @@ const UserMenuShow = ({ user }: UserMenuShowProps) => {
             </Button>
           </Link>
 
-          <Button
-            type="button"
-            variant="ghost"
-            className="justify-start hover:bg-green-500/10 hover:text-green-600 cursor-pointer"
-          >
-            <CheckCircle />
-            Joined Events
-          </Button>
+          <Link href='/joined-event'>
+            <Button
+              type="button"
+              variant="ghost"
+              className="justify-start hover:bg-green-500/10 hover:text-green-600 cursor-pointer"
+            >
+              <CheckCircle />
+              Joined Events
+            </Button>
+          </Link>
 
           <div className="my-2 border-t" />
           <Button

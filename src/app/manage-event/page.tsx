@@ -73,7 +73,7 @@ const ManageEventPage = async() => {
                <Compass className="size-6 text-muted-foreground" />
              </span>
              <h3 className="font-heading mt-5 text-lg font-semibold tracking-tight">
-               You do not have any event to manage. First creat an event.
+               You do not have any event to manage. First create an event.
              </h3>
 
              <div className='mt-5'>
