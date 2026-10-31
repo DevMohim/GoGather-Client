@@ -1,7 +1,10 @@
+'use client'
 import Image from "next/image";
-import { CalendarDays, MapPin, Pen, Trash } from "lucide-react";
+import { CalendarDays, MapPin, Pen } from "lucide-react";
 import { IEvent } from "@/types/Events.type";
 import { Button } from "@/components/ui/button";
+
+import EventDeleteDialog from "./EventDeleteDialog";
 
 
 const MyEventCard = ({ event }: { event: IEvent }) => {
@@ -21,6 +24,8 @@ const MyEventCard = ({ event }: { event: IEvent }) => {
     : "Date to be announced";
 
   const hasThumbnail = Boolean(event.thumbnailImage?.trim());
+
+  
 
   return (
     <article className="group relative isolate flex flex-col overflow-hidden rounded-3xl bg-card ring-1 ring-foreground/10 transition-all duration-500 ease-out hover:-translate-y-1 hover:shadow-[0_24px_60px_-24px_oklch(0_0_0/0.45)] hover:ring-foreground/20">
@@ -90,24 +95,6 @@ const MyEventCard = ({ event }: { event: IEvent }) => {
           </li>
         </ul>
 
-        {/* Host
-        <div className="mt-auto flex items-center gap-3 border-t border-border/60 pt-4">
-          <span
-            aria-hidden
-            className={cn(
-              "flex size-8 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold text-primary-foreground",
-              "bg-linear-to-br from-primary via-primary/85 to-primary/60"
-            )}
-          >
-            {getInitials(event.eventCreatorName)}
-          </span>
-          <span className="flex min-w-0 flex-col leading-tight">
-            <span className="truncate text-sm font-medium">
-              {event.eventCreatorName}
-            </span>
-            <span className="text-xs text-muted-foreground">Hosted by</span>
-          </span>
-        </div> */}
       </div>
 
       {/* View details */}
@@ -119,14 +106,8 @@ const MyEventCard = ({ event }: { event: IEvent }) => {
         >
           <Pen /> Edit
         </Button>
-        <Button
-          size="lg"
-          className="w-[45%] rounded-full gap-2 px-6 cursor-pointer"
-          variant='destructive'
-          aria-label={`View details for ${event.eventTitle}`}
-        >
-          <Trash /> Delete
-        </Button>
+        <EventDeleteDialog event={event}/>
+        
       </div>
     </article>
   );
