@@ -48,7 +48,8 @@ const CreateEventPage = () => {
       const newEventData = {
          ...EventData,
           eventCreatorName : user?.name,
-          eventCreatorEmail : user?.email 
+          eventCreatorEmail : user?.email,
+          eventCreatorImage: user?.image
       }
 
 

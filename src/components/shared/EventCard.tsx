@@ -2,6 +2,7 @@ import Image from "next/image";
 import { ArrowUpRight, CalendarDays, MapPin } from "lucide-react";
 import { IEvent } from "@/types/Events.type";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 
 const EventCard = ({ event }: { event: IEvent }) => {
@@ -112,17 +113,19 @@ const EventCard = ({ event }: { event: IEvent }) => {
 
       {/* View details */}
       <div className="px-6 pb-6">
-        <Button
-          size="lg"
-          className="w-full rounded-full gap-2 px-6 btn-gradient cursor-pointer"
-          aria-label={`View details for ${event.eventTitle}`}
-        >
-          View Details
-          <ArrowUpRight
-            className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            data-icon="inline-end"
-          />
-        </Button>
+        <Link href={`/upcoming-event/${event._id}`}>
+          <Button
+            size="lg"
+            className="w-full rounded-full gap-2 px-6 btn-gradient cursor-pointer"
+            aria-label={`View details for ${event.eventTitle}`}
+          >
+            View Details
+            <ArrowUpRight
+              className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              data-icon="inline-end"
+            />
+          </Button>
+        </Link>
       </div>
     </article>
   );

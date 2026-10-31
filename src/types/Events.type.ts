@@ -1,6 +1,6 @@
 export interface IEvent {
-   _id: string;
-  eventTitle:string;
+  _id: string;
+  eventTitle: string;
   eventType: string;
   eventDate: string;
   eventLocation: string;
@@ -8,4 +8,5 @@ export interface IEvent {
   eventDescription: string;
   eventCreatorName: string;
   eventCreatorEmail: string;
+  eventCreatorImage: string
 }

@@ -73,19 +73,13 @@ const Navbar = () => {
                   href={link.href}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "text-sm  flex items-center gap-2 text-dark transition-colors duration-200 hover:text-primery font-bold",
+                    "relative text-sm flex items-center gap-2 px-3 py-2 text-dark transition-colors duration-200 hover:text-primery font-bold",
                     isActive ? "text-primary" : "",
                   )}
                 >
                   <span>{link.icon}</span>
                   <span>{link.label}</span>
-                  <span
-                    aria-hidden
-                    className={cn(
-                      "absolute inset-x-3 -bottom-0.5 h-0.5 rounded-full bg-primary transition-transform duration-200",
-                      isActive ? "scale-x-100" : "scale-x-0",
-                    )}
-                  />
+                  
                 </Link>
               </li>
             );
@@ -192,6 +186,7 @@ const Navbar = () => {
               </li>
             );
           })}
+
           <li className="mt-1">
             <Button
               className="w-full rounded-full bg-linear-to-r from-[#F28C45] to-[#D96A2B]"
