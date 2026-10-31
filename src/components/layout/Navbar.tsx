@@ -15,7 +15,7 @@ import toast from "react-hot-toast";
 
 const navLinks = [
   {
-    href: "/events",
+    href: "/upcoming-event",
     label: "Upcoming Events",
     icon: <Calendar1 className="w-4 -mr-1.5" />,
   },

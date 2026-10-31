@@ -1,7 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    // Event thumbnails can come from any external host (upload services, CDNs, etc.)
+    remotePatterns: [{ protocol: "https", hostname: "**" }],
+  },
   experimental: {
     agentFeedback: true,
   },

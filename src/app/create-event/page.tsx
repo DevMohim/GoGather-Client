@@ -117,12 +117,14 @@ const CreateEventPage = () => {
                       <SelectValue placeholder="Select event type" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="conference">Clean up</SelectItem>
-                      <SelectItem value="workshop">Plantation</SelectItem>
-                      <SelectItem value="meetup">Donation</SelectItem>
-                      <SelectItem value="webinar">Blood Donation</SelectItem>
-                      <SelectItem value="concert">Winter Relief</SelectItem>
-                      <SelectItem value="other">Free Education</SelectItem>
+                      <SelectItem value="clean-up">Clean up</SelectItem>
+                      <SelectItem value="plantation">Plantation</SelectItem>
+                      <SelectItem value="donation">Donation</SelectItem>
+                      <SelectItem value="blood-donation">Blood Donation</SelectItem>
+                      <SelectItem value="winter-relief">Winter Relief</SelectItem>
+                      <SelectItem value="education">Free Education</SelectItem>
+                      <SelectItem value="chariy">Charity</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -181,7 +183,7 @@ const CreateEventPage = () => {
               <Button
                 type="submit"
                 size="lg"
-                className="w-full bg-linear-to-r from-[#F28C45] to-[#D96A2B] cursor-pointer"
+                className="w-full btn-gradient cursor-pointer"
               >
                 Publish event
               </Button>
