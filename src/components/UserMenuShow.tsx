@@ -67,15 +67,16 @@ const UserMenuShow = ({ user }: UserMenuShowProps) => {
         </PopoverHeader>
 
         <div className="mt-2 flex flex-col">
-          <Button
-            type="button"
-            variant="ghost"
-            className="justify-start hover:bg-green-500/10 hover:text-green-600 cursor-pointer"
-          >
-            <User />
-            Profile
-          </Button>
-
+          <Link href="/profile">
+            <Button
+              type="button"
+              variant="ghost"
+              className="justify-start hover:bg-green-500/10 hover:text-green-600 cursor-pointer"
+            >
+              <User />
+              Profile
+            </Button>
+          </Link>
           <Link href="/create-event">
             <Button
               type="button"
@@ -98,7 +99,7 @@ const UserMenuShow = ({ user }: UserMenuShowProps) => {
             </Button>
           </Link>
 
-          <Link href='/joined-event'>
+          <Link href="/joined-event">
             <Button
               type="button"
               variant="ghost"

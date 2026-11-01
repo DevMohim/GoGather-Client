@@ -40,7 +40,9 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur-md">
       <nav className="container mx-auto flex h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-        {/* Brand */}
+
+
+        {/* Brand logo */}
         <Link
           href="/"
           className="flex items-center gap-3 rounded-lg outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
@@ -79,7 +81,6 @@ const Navbar = () => {
                 >
                   <span>{link.icon}</span>
                   <span>{link.label}</span>
-                  
                 </Link>
               </li>
             );
@@ -109,14 +110,14 @@ const Navbar = () => {
                   {user.name}
                 </span>
               </div>
-              
+
               <UserMenuShow user={user} />
 
               <Link href="/login">
                 <Button
                   type="button"
                   variant="ghost"
-                  className="justify-start text-destructive cursor-pointer hover:text-white hover:bg-secondery border border-dark/20"
+                  className="justify-start text-destructive cursor-pointer hover:text-white hover:bg-secondery border border-dark/20 hidden md:inline-flex"
                   onClick={handleSignOut}
                 >
                   <LogOut />
@@ -144,17 +145,6 @@ const Navbar = () => {
               </Button>
             </Link>
           )}
-
-          <Button
-            variant="ghost"
-            size="icon"
-            className="md:hidden cursor-pointer"
-            aria-label={open ? "Close menu" : "Open menu"}
-            aria-expanded={open}
-            onClick={() => setOpen((v) => !v)}
-          >
-            {open ? <X /> : <Menu />}
-          </Button>
         </div>
       </nav>
 
@@ -173,31 +163,42 @@ const Navbar = () => {
                 <Link
                   href={link.href}
                   aria-current={isActive ? "page" : undefined}
-                  onClick={() => setOpen(false)}
                   className={cn(
-                    "block rounded-lg px-3 py-2 text-sm font-medium transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50",
-                    isActive
-                      ? "bg-muted text-foreground"
-                      : "text-muted-foreground hover:bg-muted hover:text-foreground",
+                    "relative text-sm flex items-center gap-2 px-3 py-2 text-dark transition-colors duration-200 hover:text-primery font-bold",
+                    isActive ? "text-primary" : "",
                   )}
                 >
-                  {link.label}
+                  <span>{link.icon}</span>
+                  <span>{link.label}</span>
                 </Link>
+
+                
+                
               </li>
             );
           })}
-
-          <li className="mt-1">
+        </ul>
+        <div className="flex items-center justify-center gap-2 border-t border-border/60 p-4">
+          {user ? (
             <Button
-              className="w-full rounded-full bg-linear-to-r from-[#F28C45] to-[#D96A2B]"
+              className="w-full rounded-full btn-gradient cursor-pointer"
+              size="lg"
+              onClick={handleSignOut}
+            >
+              <LogOut />
+              Log out
+            </Button>
+          ) : (
+            <Button
+              className="w-full rounded-full btn-gradient cursor-pointer"
               size="lg"
               nativeButton={false}
               render={<Link href="/login" />}
             >
               Login
             </Button>
-          </li>
-        </ul>
+          )}
+          </div>
       </div>
     </header>
   );
