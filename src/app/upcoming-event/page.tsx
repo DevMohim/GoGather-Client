@@ -8,7 +8,7 @@ import BacktoHomepageBtn from "@/components/shared/BacktoHomepageBtn";
 const UpcomingEventPage = async () => {
 
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/upcoming-events`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`);
   const events = (await res.json()) as IEvent[];
 
   const today = new Date();
