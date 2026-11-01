@@ -40,8 +40,6 @@ const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/80 backdrop-blur-md">
       <nav className="container mx-auto flex h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
-
-
         {/* Brand logo */}
         <Link
           href="/"
@@ -87,6 +85,7 @@ const Navbar = () => {
           })}
         </ul>
 
+        
         {/* Actions */}
         <div className="flex items-center gap-2">
           {user ? (
@@ -103,9 +102,9 @@ const Navbar = () => {
 
                 <span
                   className="pointer-events-none absolute left-1/2 top-full z-10 mt-2
-                   -translate-x-1/2 whitespace-nowrap rounded-md bg-gray-900
-                   px-2 py-1 text-xs text-white opacity-0 transition-opacity
-                   group-hover:opacity-100"
+           -translate-x-1/2 whitespace-nowrap rounded-md bg-gray-900
+           px-2 py-1 text-xs text-white opacity-0 transition-opacity
+           group-hover:opacity-100"
                 >
                   {user.name}
                 </span>
@@ -117,34 +116,35 @@ const Navbar = () => {
                 <Button
                   type="button"
                   variant="ghost"
-                  className="justify-start text-destructive cursor-pointer hover:text-white hover:bg-secondery border border-dark/20 hidden md:inline-flex"
+                  className="justify-start text-destructive cursor-pointer hover:text-white btn-gradient border border-dark/20 hidden md:inline-flex"
                   onClick={handleSignOut}
                 >
                   <LogOut />
                   Log out
                 </Button>
               </Link>
-
-              <button
-                type="button"
-                onClick={() => setOpen((open) => !open)}
-                aria-expanded={open}
-                aria-label={open ? "Close menu" : "Open menu"}
-                className="flex size-9 items-center justify-center rounded-lg text-zinc-700 transition-colors hover:bg-zinc-100 md:hidden"
-              >
-                {open ? <X className="size-5" /> : <Menu className="size-5" />}
-              </button>
             </div>
           ) : (
             <Link href="/login">
               <Button
                 size="lg"
-                className="hidden rounded-full bg-linear-to-r from-[#F28C45] to-[#D96A2B] px-5 pb-1 text-white shadow-sm transition-all duration-300 hover:from-[#E77A35] hover:to-secondery hover:shadow-md md:inline-flex cursor-pointer"
+                className="hidden rounded-full  px-5 pb-1 text-white shadow-sm transition-all duration-300 btn-gradient hover:scale-105 hover:shadow-md md:inline-flex cursor-pointer"
               >
                 Login
               </Button>
             </Link>
           )}
+
+         
+          <button
+            type="button"
+            onClick={() => setOpen((open) => !open)}
+            aria-expanded={open}
+            aria-label={open ? "Close menu" : "Open menu"}
+            className="flex size-9 items-center justify-center rounded-lg text-zinc-700 transition-colors hover:bg-zinc-100 md:hidden"
+          >
+            {open ? <X className="size-5" /> : <Menu className="size-5" />}
+          </button>
         </div>
       </nav>
 
@@ -171,9 +171,6 @@ const Navbar = () => {
                   <span>{link.icon}</span>
                   <span>{link.label}</span>
                 </Link>
-
-                
-                
               </li>
             );
           })}
@@ -198,7 +195,7 @@ const Navbar = () => {
               Login
             </Button>
           )}
-          </div>
+        </div>
       </div>
     </header>
   );

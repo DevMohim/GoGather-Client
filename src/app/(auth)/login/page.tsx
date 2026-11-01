@@ -86,7 +86,7 @@ const LoginPage = () => {
 
           <button
             type="submit"
-            className="w-full rounded-lg bg-linear-to-r from-[#F28C45] to-[#e26c28] px-4 py-2.5 text-sm font-medium text-white transition hover:bg-primery focus:outline-none focus:ring-2 focus:ring-primery focus:ring-offset-2 cursor-pointer"
+            className="w-full rounded-lg transition-all duration-300 btn-gradient hover:scale-105 px-4 py-2.5 text-sm font-medium text-white hover:bg-primery focus:outline-none focus:ring-2 focus:ring-primery focus:ring-offset-2 cursor-pointer"
           >
             Log in
           </button>

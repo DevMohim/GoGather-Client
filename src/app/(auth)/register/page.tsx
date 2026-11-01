@@ -47,10 +47,7 @@ export default function RegisterPage() {
 
     setLoading(true);
 
-    try {
-      // Temporary loading simulation
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
+    try { 
       const userData = {
         name,
         email,
@@ -84,7 +81,7 @@ export default function RegisterPage() {
     }
   }
   return (
-    <section className="bg-bg">
+    <section className="bg-bg pb-8 pt-2 lg:pb-20">
       <div className="w-lg bg-white mx-auto mt-20 p-6 border rounded-xl">
         <Image src={Logo} alt="logo" width={40} height={40}></Image>
 
@@ -231,7 +228,7 @@ export default function RegisterPage() {
           {/* Register Button */}
           <button
             type="submit"
-            className="w-full bg-linear-to-r from-[#F28C45] to-[#e26c28] text-white p-3 rounded-lg cursor-pointer font-semibold"
+            className="w-full transition-all duration-300 btn-gradient hover:scale-105 text-white p-3 rounded-lg cursor-pointer font-semibold"
           >
             {loading ? "Registering..." : "Register"}
           </button>
