@@ -4,6 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/layout/Navbar";
 import { Toaster } from 'react-hot-toast'
+import Footer from "@/components/layout/Footer";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -34,8 +35,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body suppressHydrationWarning className="min-h-full flex flex-col">
         <Navbar />
-        {children}
-        <Toaster position="top-right"/>
+        <main>{children}</main>
+        <Footer />
+        <Toaster position="top-right" />
       </body>
     </html>
   );
