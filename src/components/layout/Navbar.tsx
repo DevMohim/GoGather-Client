@@ -92,12 +92,12 @@ const Navbar = () => {
               <div className="group relative inline-block">
                 <Avatar size="lg">
                   <AvatarImage
-                    src={user.image || undefined}
-                    alt={user.name}
+                    src={user?.image || undefined}
+                    alt={user?.name}
                     referrerPolicy="no-referrer"
                     className="bg-zinc-100"
                   />
-                  <AvatarFallback>{user.name?.charAt(0) || "U"}</AvatarFallback>
+                  <AvatarFallback>{user?.name?.charAt(0) || "U"}</AvatarFallback>
                 </Avatar>
 
                 <span
