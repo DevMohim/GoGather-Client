@@ -32,51 +32,7 @@ const UpcomingEventPage = async () => {
 
   return (
     <main className="relative overflow-hidden bg-bg">
-      {/* Hero
-      <section className="container mx-auto px-4 pt-4 pb-14 sm:px-6 md:pt-10 md:pb-16 lg:px-8">
-        <div className="mx-auto max-w-3xl text-center">
-          <Badge
-            variant="outline"
-            className="gap-2 rounded-full px-4 py-1.5 text-xs tracking-[0.16em] uppercase backdrop-blur"
-          >
-            <Sparkles className="size-3" />
-            Handpicked gatherings
-          </Badge>
-
-          <h1 className="mt-6 text-4xl leading-[1.05] text-balance sm:text-5xl md:text-6xl bg-linear-to-r from-[#2A8A75] via-primery to-[#10483E] bg-clip-text font-bold tracking-tight text-transparent font-secondary">
-            Gather somewhere{' '}
-            <span className="bg-linear-to-r from-[#2A8A75] via-primery to-[#10483E] bg-clip-text font-bold tracking-tight text-transparent italic font-secondary">
-              remarkable
-            </span>
-          </h1>
-
-          <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-            Find community events that bring support, opportunity, and hope to
-            people in need.
-          </p>
-
-          <div>
-            <Link href="/create-event">
-              <Button className="mt-5 btn-gradient cursor-pointer w-sm">
-                <PlusCircle /> Create Event
-              </Button>
-            </Link>
-          </div>
-
-          {nextEventDate ? (
-            <p className="mt-6 inline-flex items-center gap-2 text-sm text-muted-foreground">
-              <span className="relative flex size-1.5">
-                <span className="absolute inline-flex size-full animate-ping rounded-full bg-primary/60" />
-                <span className="relative inline-flex size-1.5 rounded-full bg-primary" />
-              </span>
-              Next gathering lands{" "}
-              <span className="font-medium text-foreground">
-                {nextEventDate}
-              </span>
-            </p>
-          ) : null}
-        </div>
-      </section> */}
+      
 
       {/* back to homepage btn */}
       <BacktoHomepageBtn />
