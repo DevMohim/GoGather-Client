@@ -2,6 +2,7 @@ import BacktoHomepageBtn from '@/components/shared/BacktoHomepageBtn';
 import JoinedEventCard from '@/components/shared/JoinedEventCard';
 import { Button } from '@/components/ui/button';
 import { auth } from '@/lib/auth';
+import { getTokenFromServer } from '@/lib/getTokenFromServer';
 import { IJoinEvent } from '@/types/JoinEvent.type';
 import { Compass, PlusCircle } from 'lucide-react';
 import { headers } from 'next/headers';
@@ -12,9 +13,14 @@ const JoinedEventPage = async () => {
     headers: await headers(),
   });
   const user = sessionData?.user;
+  const token = getTokenFromServer()
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/my-joined-events/${user?.email}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/my-joined-events/${user?.email}`,{
+      headers: {
+        authorization : `Bearer ${token}`
+      }
+    }
   );
   const myEvents = (await res.json()) as IJoinEvent[];
   console.log('my joined events',myEvents)

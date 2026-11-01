@@ -13,6 +13,7 @@ const EventDetailsPage = async ({
 }: {
   params: Promise<{ id: string }>;
 }) => {
+
   const { id } = await params;
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${id}`);
 

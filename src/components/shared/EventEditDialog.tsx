@@ -15,7 +15,7 @@ import { IEvent } from "@/types/Events.type";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { FormEvent } from "react";
-import { useSession } from "@/lib/auth-client";
+import { authClient, useSession } from "@/lib/auth-client";
 import { FieldGroup } from "../ui/field";
 import { Textarea } from "../ui/textarea";
 import {
@@ -28,6 +28,7 @@ import {
 import { Pen } from "lucide-react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { getTokenFromClient } from "@/lib/getTokenFromClient";
 
 const today = new Date();
 const minDate = [
@@ -44,6 +45,8 @@ const EventEditDialog = ({ event }: { event: IEvent }) => {
   const handleEventEdit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const token = getTokenFromClient()
+
     const formData = new FormData(e.currentTarget);
     const eventDate = formData.get("eventDate");
 
@@ -58,11 +61,17 @@ const EventEditDialog = ({ event }: { event: IEvent }) => {
       eventCreatorImage: user?.image,
     };
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events/${event._id}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(editedData),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/events/${event._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(editedData),
+        },
+      );
 
       if (!res.ok) {
         console.error("Event update failed:", res.status);
@@ -71,7 +80,7 @@ const EventEditDialog = ({ event }: { event: IEvent }) => {
       }
 
       toast.success("Event update successful");
-      router.refresh()
+      router.refresh();
     } catch (error) {
       console.error("Event update request failed:", error);
       toast.error("Could not update event");
@@ -192,9 +201,9 @@ const EventEditDialog = ({ event }: { event: IEvent }) => {
           <DialogFooter>
             <DialogClose
               render={
-                  <Button type="submit" className="btn-gradient cursor-pointer">
-                    Save changes
-                  </Button>
+                <Button type="submit" className="btn-gradient cursor-pointer">
+                  Save changes
+                </Button>
               }
             />
           </DialogFooter>
