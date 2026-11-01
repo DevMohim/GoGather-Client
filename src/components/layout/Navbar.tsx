@@ -85,7 +85,6 @@ const Navbar = () => {
           })}
         </ul>
 
-        
         {/* Actions */}
         <div className="flex items-center gap-2">
           {user ? (
@@ -93,8 +92,9 @@ const Navbar = () => {
               <div className="group relative inline-block">
                 <Avatar size="lg">
                   <AvatarImage
-                    src={user.image ?? undefined}
+                    src={user.image || undefined}
                     alt={user.name}
+                    referrerPolicy="no-referrer"
                     className="bg-zinc-100"
                   />
                   <AvatarFallback>{user.name?.charAt(0) || "U"}</AvatarFallback>
@@ -115,8 +115,7 @@ const Navbar = () => {
               <Link href="/login">
                 <Button
                   type="button"
-                  variant="ghost"
-                  className="justify-start text-destructive cursor-pointer hover:text-white btn-gradient border border-dark/20 hidden md:inline-flex"
+                  className="justify-start cursor-pointer hover:text-white btn-gradient border border-dark/20 hidden md:inline-flex text-white"
                   onClick={handleSignOut}
                 >
                   <LogOut />
@@ -135,7 +134,6 @@ const Navbar = () => {
             </Link>
           )}
 
-         
           <button
             type="button"
             onClick={() => setOpen((open) => !open)}
