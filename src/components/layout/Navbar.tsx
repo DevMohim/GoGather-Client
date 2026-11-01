@@ -11,6 +11,7 @@ import Logo from "@/assest/logo.png";
 import { signOut, useSession } from "@/lib/auth-client";
 import UserMenuShow from "../UserMenuShow";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { normalizeAvatarUrl } from "@/lib/avatar";
 import toast from "react-hot-toast";
 
 const navLinks = [
@@ -92,7 +93,7 @@ const Navbar = () => {
               <div className="group relative inline-block">
                 <Avatar size="lg">
                   <AvatarImage
-                    src={user?.image || undefined}
+                    src={normalizeAvatarUrl(user?.image)}
                     alt={user?.name}
                     referrerPolicy="no-referrer"
                     className="bg-zinc-100"

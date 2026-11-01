@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import Logo from '@/assest/logo.png'
+import { normalizeAvatarUrl } from "@/lib/avatar";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -45,13 +46,21 @@ export default function RegisterPage() {
 
     if (!isFormValid || loading) return;
 
+    // Better Auth only accepts the `image` field on signup — `imageURL` was
+    // silently dropped, which is why avatars never showed after deployment.
+    const image = normalizeAvatarUrl(imageURL);
+    if (imageURL.trim() && !image) {
+      toast.error("Please enter a valid image URL (https://...)");
+      return;
+    }
+
     setLoading(true);
 
     try { 
       const userData = {
         name,
         email,
-        imageURL,
+        image,
         password,
       };
 
@@ -135,6 +144,12 @@ export default function RegisterPage() {
               className="w-full border p-3 rounded-lg mt-2"
               autoCapitalize="email"
             />
+
+            {imageURL.trim().length > 0 && !normalizeAvatarUrl(imageURL) && (
+              <p className="text-red-500 text-[10px] mt-1">
+                ✗ Please enter a valid URL starting with http:// or https://
+              </p>
+            )}
           </div>
 
           {/* Password */}
@@ -156,7 +171,11 @@ export default function RegisterPage() {
                 onClick={() => setShowPassword(!showPassword)}
                 className="px-3 text-sm"
               >
-                {showPassword ? <Eye /> : <EyeClosedIcon />}
+                {showPassword ? (
+                  <Eye className="h-4 w-4" />
+                ) : (
+                  <EyeClosedIcon className="h-4 w-4" />
+                )}
               </button>
             </div>
 
@@ -212,7 +231,11 @@ export default function RegisterPage() {
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 className="px-3 text-sm"
               >
-                {showConfirmPassword ? <Eye /> : <EyeClosed />}
+                {showConfirmPassword ? (
+                  <Eye className="h-4 w-4" />
+                ) : (
+                  <EyeClosed className="h-4 w-4" />
+                )}
               </button>
             </div>
 
@@ -220,7 +243,7 @@ export default function RegisterPage() {
               <p className={passwordMatch ? "text-green-600" : "text-red-500"}>
                 {passwordMatch
                   ? "✓ Password matched"
-                  : "✗ Password does not match"}
+                  : "x Password does not match"}
               </p>
             )}
           </div>

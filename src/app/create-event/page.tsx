@@ -22,6 +22,7 @@ import { FormEvent } from "react";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
 import { useSession } from "@/lib/auth-client";
+import { normalizeAvatarUrl } from "@/lib/avatar";
 
 
 const today = new Date()
@@ -49,7 +50,7 @@ const CreateEventPage = () => {
          ...EventData,
           eventCreatorName : user?.name,
           eventCreatorEmail : user?.email,
-          eventCreatorImage: user?.image
+          eventCreatorImage: normalizeAvatarUrl(user?.image)
       }
 
 

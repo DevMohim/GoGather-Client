@@ -15,7 +15,8 @@ import { IEvent } from "@/types/Events.type";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { FormEvent } from "react";
-import { authClient, useSession } from "@/lib/auth-client";
+import { useSession } from "@/lib/auth-client";
+import { normalizeAvatarUrl } from "@/lib/avatar";
 import { FieldGroup } from "../ui/field";
 import { Textarea } from "../ui/textarea";
 import {
@@ -58,7 +59,7 @@ const EventEditDialog = ({ event }: { event: IEvent }) => {
       ...Object.fromEntries(formData.entries()),
       eventCreatorName: user?.name,
       eventCreatorEmail: user?.email,
-      eventCreatorImage: user?.image,
+      eventCreatorImage: normalizeAvatarUrl(user?.image),
     };
     try {
       const res = await fetch(

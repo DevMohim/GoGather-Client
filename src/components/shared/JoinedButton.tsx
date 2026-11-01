@@ -7,6 +7,7 @@ import { Separator } from "../ui/separator";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useSession } from "@/lib/auth-client";
+import { normalizeAvatarUrl } from "@/lib/avatar";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 
@@ -81,7 +82,7 @@ const JoinedButton = ({ eventInfo }: { eventInfo: IEvent }) => {
       userId: userInfo.id,
       name: userInfo.name,
       email: userInfo.email,
-      image: userInfo.image,
+      image: normalizeAvatarUrl(userInfo.image),
       joinDate : new Date()
     };
 
@@ -168,7 +169,9 @@ const JoinedButton = ({ eventInfo }: { eventInfo: IEvent }) => {
               </CardHeader>
               <CardContent className="flex items-center gap-4">
                 <Avatar className="h-14 w-14">
-                  <AvatarImage src={eventInfo.eventCreatorImage} />
+                  <AvatarImage
+                    src={normalizeAvatarUrl(eventInfo.eventCreatorImage)}
+                  />
                   <AvatarFallback className="text-lg font-semibold">
                     {creatorInitials}
                   </AvatarFallback>

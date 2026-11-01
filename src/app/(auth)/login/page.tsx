@@ -2,14 +2,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "@/assest/logo.png";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { signIn } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { Eye, EyeClosed } from "lucide-react";
 
 const LoginPage = () => {
-
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,15 +29,14 @@ const LoginPage = () => {
     }
   };
 
-  const handleGoogleLogin = async() => {
+  const handleGoogleLogin = async () => {
     const data = await signIn.social({
-      provider: 'google'
-    })
+      provider: "google",
+    });
     if (data) {
       router.push("/");
     }
-  }
-
+  };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-stone-100 px-4 py-10">
@@ -63,7 +63,7 @@ const LoginPage = () => {
               name="email"
               placeholder="you@example.com"
               autoComplete="email"
-              className="w-full rounded-lg border border-stone-300 px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/20"
+              className="w-full rounded-lg border border-stone-300 px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 "
             />
           </div>
 
@@ -74,14 +74,29 @@ const LoginPage = () => {
             >
               Password
             </label>
-            <input
-              id="password"
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              autoComplete="new-password"
-              className="w-full rounded-lg border border-stone-300 px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 focus:border-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-600/20"
-            />
+            <div className="relative">
+              <input
+                id="password"
+                type={showPassword ? "text" : "password"}
+                name="password"
+                placeholder="Enter your password"
+                autoComplete="current-password"
+                className="w-full rounded-lg border border-stone-300 px-3.5 py-2.5 pr-11 text-sm text-stone-900 placeholder:text-stone-400"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((show) => !show)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
+                className="absolute inset-y-0 right-0 flex w-11 cursor-pointer items-center justify-center rounded-r-lg "
+              >
+                {showPassword ? (
+                  <Eye className="h-4 w-4" />
+                ) : (
+                  <EyeClosed className="h-4 w-4" />
+                )}
+              </button>
+            </div>
           </div>
 
           <button
