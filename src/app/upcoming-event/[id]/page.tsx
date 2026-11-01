@@ -1,8 +1,6 @@
 
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-
-
 import Image from "next/image";
 import { IEvent } from "@/types/Events.type";
 import JoinedButton from "@/components/shared/JoinedButton";

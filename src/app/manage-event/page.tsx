@@ -2,6 +2,7 @@ import BacktoHomepageBtn from '@/components/shared/BacktoHomepageBtn';
 import MyEventCard from '@/components/shared/MyEventCard';
 import { Button } from '@/components/ui/button';
 import { auth } from '@/lib/auth';
+import { getTokenFromServer } from '@/lib/getTokenFromServer';
 import { IEvent } from '@/types/Events.type';
 import { Compass, PlusCircle } from 'lucide-react';
 import { headers } from 'next/headers';
@@ -12,9 +13,14 @@ const ManageEventPage = async() => {
       headers: await headers()
    })
    const user = sessionData?.user
+   const token = getTokenFromServer()
 
    const res = await fetch(
-     `${process.env.NEXT_PUBLIC_API_URL}/my-events/${user?.email}`,
+     `${process.env.NEXT_PUBLIC_API_URL}/my-events/${user?.email}`,{
+      headers: {
+        authorization : `Bearer ${token}`
+      }
+     }
    );
    const myEvents = await res.json() as IEvent[]
    

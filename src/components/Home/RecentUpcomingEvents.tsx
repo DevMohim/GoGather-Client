@@ -24,12 +24,12 @@ const RecentUpcomingEvents = async () => {
     : [];
 
   return (
-    <section className="bg-background py-20 md:py-28">
+    <section className="bg-dark py-10 md:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section heading */}
         <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="max-w-2xl">
-            <h2 className="text-3xl font-bold tracking-tight font-secondary sm:text-4xl">
+            <h2 className="text-3xl font-bold tracking-tight text-white font-secondary sm:text-4xl">
               Recent upcoming events
             </h2>
             <p className="mt-3 text-muted-foreground">
@@ -40,7 +40,7 @@ const RecentUpcomingEvents = async () => {
 
           <Link
             href="/upcoming-event"
-            className="group inline-flex items-center gap-2 text-sm font-semibold transition-colors hover:text-primary"
+            className="group inline-flex items-center gap-2 text-sm font-semibold transition-colors text-white"
           >
             View all events
             <ArrowRight className="size-4 transition-transform duration-300 group-hover:translate-x-1" />
