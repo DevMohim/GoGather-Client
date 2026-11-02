@@ -13,7 +13,7 @@ const ManageEventPage = async() => {
       headers: await headers()
    })
    const user = sessionData?.user
-   const token = getTokenFromServer()
+   const token =await getTokenFromServer()
 
    const res = await fetch(
      `${process.env.NEXT_PUBLIC_API_URL}/my-events/${user?.email}`,{

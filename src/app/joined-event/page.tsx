@@ -13,7 +13,9 @@ const JoinedEventPage = async () => {
     headers: await headers(),
   });
   const user = sessionData?.user;
-  const token = getTokenFromServer()
+  const token =await getTokenFromServer()
+
+  console.log(token)
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/my-joined-events/${user?.email}`,{
