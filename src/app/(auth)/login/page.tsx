@@ -80,7 +80,7 @@ const LoginPage = () => {
                 type={showPassword ? "text" : "password"}
                 name="password"
                 placeholder="Enter your password"
-                autoComplete="current-password"
+                autoComplete="new-password"
                 className="w-full rounded-lg border border-stone-300 px-3.5 py-2.5 pr-11 text-sm text-stone-900 placeholder:text-stone-400"
               />
               <button

@@ -1,6 +1,6 @@
 "use client";
 
-import { signIn, signUp } from "@/lib/auth-client";
+import { signIn, signOut, signUp } from "@/lib/auth-client";
 import { Eye, EyeClosed, EyeClosedIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -72,6 +72,7 @@ export default function RegisterPage() {
         setImageURL('')
         setPassword("")
         setConfirmPassword('') 
+        await signOut()
         router.push("/login");
       }
     } catch (error) {
