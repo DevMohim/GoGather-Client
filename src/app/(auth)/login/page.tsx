@@ -39,13 +39,13 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-stone-100 px-4 py-10">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-sm ring-1 ring-stone-200">
+    <div className="flex min-h-screen items-center justify-center bg-bg px-4 py-10">
+      <div className="w-full max-w-md rounded-2xl bg-card p-8 shadow-sm ring-1 ring-border">
         <Image src={Logo} alt="logo" width={40} height={40}></Image>
-        <h1 className="text-2xl font-semibold text-stone-900 font-secondary">
+        <h1 className="text-2xl font-semibold text-foreground font-secondary">
           Welcome Back
         </h1>
-        <p className="mt-1 text-sm text-stone-500">
+        <p className="mt-1 text-sm text-muted-foreground">
           Enter your email and password to continue.
         </p>
 
@@ -53,7 +53,7 @@ const LoginPage = () => {
           <div>
             <label
               htmlFor="email"
-              className="mb-1.5 block text-sm font-medium text-stone-700"
+              className="mb-1.5 block text-sm font-medium text-foreground"
             >
               Email
             </label>
@@ -63,14 +63,14 @@ const LoginPage = () => {
               name="email"
               placeholder="you@example.com"
               autoComplete="email"
-              className="w-full rounded-lg border border-stone-300 px-3.5 py-2.5 text-sm text-stone-900 placeholder:text-stone-400 "
+              className="w-full rounded-lg border border-input bg-background px-3.5 py-2.5 text-sm text-foreground placeholder:text-muted-foreground"
             />
           </div>
 
           <div>
             <label
               htmlFor="password"
-              className="mb-1.5 block text-sm font-medium text-stone-700"
+              className="mb-1.5 block text-sm font-medium text-foreground"
             >
               Password
             </label>
@@ -81,7 +81,7 @@ const LoginPage = () => {
                 name="password"
                 placeholder="Enter your password"
                 autoComplete="new-password"
-                className="w-full rounded-lg border border-stone-300 px-3.5 py-2.5 pr-11 text-sm text-stone-900 placeholder:text-stone-400"
+                className="w-full rounded-lg border border-input bg-background px-3.5 py-2.5 pr-11 text-sm text-foreground placeholder:text-muted-foreground"
               />
               <button
                 type="button"
@@ -108,15 +108,15 @@ const LoginPage = () => {
         </form>
 
         <div className="my-6 flex items-center gap-3">
-          <span className="h-px flex-1 bg-stone-200" />
-          <span className="text-sm text-stone-500">or continue with</span>
-          <span className="h-px flex-1 bg-stone-200" />
+          <span className="h-px flex-1 bg-border" />
+          <span className="text-sm text-muted-foreground">or continue with</span>
+          <span className="h-px flex-1 bg-border" />
         </div>
 
         <button
           type="button"
           onClick={handleGoogleLogin}
-          className="flex w-full items-center justify-center gap-3 rounded-lg border border-stone-300 bg-white px-4 py-2.5 text-sm font-medium text-stone-700 transition hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2 cursor-pointer"
+          className="flex w-full items-center justify-center gap-3 rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium text-foreground transition hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring/50 cursor-pointer"
         >
           <svg className="h-5 w-5" viewBox="0 0 48 48" aria-hidden="true">
             <path
@@ -139,11 +139,11 @@ const LoginPage = () => {
           Continue with Google
         </button>
 
-        <p className="mt-4 text-center text-sm text-stone-600">
+        <p className="mt-4 text-center text-sm text-muted-foreground">
           Don&apos;t have an account?{" "}
           <Link
             href="/register"
-            className="font-medium text-dark hover:text-primery hover:underline"
+            className="font-medium text-foreground hover:text-primery hover:underline"
           >
             Register
           </Link>

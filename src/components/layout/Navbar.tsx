@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import {  Calendar1, LogOut, Menu, X } from "lucide-react";
+import { Calendar1, LogOut, Menu, Moon, Sun, X } from "lucide-react";
+import { useTheme } from "next-themes";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import Logo from "@/assest/logo.png";
@@ -21,6 +22,38 @@ const navLinks = [
     icon: <Calendar1 className="w-4 -mr-1.5" />,
   },
 ];
+
+// Server snapshot is false, client snapshot is true — flips the icon after
+// hydration without a setState-in-effect (and without a hydration mismatch).
+const subscribeToMounted = () => () => {};
+const getMounted = () => true;
+const getMountedOnServer = () => false;
+
+const ThemeToggle = () => {
+  const { resolvedTheme, setTheme } = useTheme();
+  const mounted = useSyncExternalStore(
+    subscribeToMounted,
+    getMounted,
+    getMountedOnServer,
+  );
+
+  const isDark = mounted && resolvedTheme === "dark";
+
+  return (
+    <button
+      type="button"
+      onClick={() => setTheme(isDark ? "light" : "dark")}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+      className="flex size-9 shrink-0 cursor-pointer items-center justify-center rounded-lg text-foreground transition-colors hover:bg-muted"
+    >
+      {isDark ? (
+        <Sun className="size-5" />
+      ) : (
+        <Moon className="size-5" />
+      )}
+    </button>
+  );
+};
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -55,7 +88,7 @@ const Navbar = () => {
             />
           </span>
           <span className="flex flex-col leading-tight">
-            <span className="bg-linear-to-r from-[#10483E] via-primery to-[#2A8A75] bg-clip-text text-2xl font-bold tracking-tight text-transparent">
+            <span className="bg-linear-to-r from-[#10483E] via-primery to-[#2A8A75] bg-clip-text text-2xl font-bold tracking-tight text-transparent dark:from-[#5ECFB2] dark:via-[#2FA78E] dark:to-[#8CE9D4]">
               GoGather
             </span>
             <span className="text-[7px] font-medium tracking-[0.18em] text-muted-foreground uppercase">
@@ -74,7 +107,7 @@ const Navbar = () => {
                   href={link.href}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "relative text-sm flex items-center gap-2 px-3 py-2 text-dark transition-colors duration-200 hover:text-primery font-bold",
+                    "relative text-sm flex items-center gap-2 px-3 py-2 text-foreground transition-colors duration-200 hover:text-primery font-bold",
                     isActive ? "text-primary" : "",
                   )}
                 >
@@ -88,6 +121,7 @@ const Navbar = () => {
 
         {/* Actions */}
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           {user ? (
             <div className="flex shrink-0 items-center gap-2">
               <div className="group relative inline-block">
@@ -96,7 +130,7 @@ const Navbar = () => {
                     src={normalizeAvatarUrl(user?.image)}
                     alt={user?.name}
                     referrerPolicy="no-referrer"
-                    className="bg-zinc-100"
+                    className="bg-muted"
                   />
                   <AvatarFallback>{user?.name?.charAt(0) || "U"}</AvatarFallback>
                 </Avatar>
@@ -140,7 +174,7 @@ const Navbar = () => {
             onClick={() => setOpen((open) => !open)}
             aria-expanded={open}
             aria-label={open ? "Close menu" : "Open menu"}
-            className="flex size-9 items-center justify-center rounded-lg text-zinc-700 transition-colors hover:bg-zinc-100 md:hidden"
+            className="flex size-9 items-center justify-center rounded-lg text-foreground transition-colors hover:bg-muted md:hidden"
           >
             {open ? <X className="size-5" /> : <Menu className="size-5" />}
           </button>
@@ -163,7 +197,7 @@ const Navbar = () => {
                   href={link.href}
                   aria-current={isActive ? "page" : undefined}
                   className={cn(
-                    "relative text-sm flex items-center gap-2 px-3 py-2 text-dark transition-colors duration-200 hover:text-primery font-bold",
+                    "relative text-sm flex items-center gap-2 px-3 py-2 text-foreground transition-colors duration-200 hover:text-primery font-bold",
                     isActive ? "text-primary" : "",
                   )}
                 >
@@ -175,6 +209,7 @@ const Navbar = () => {
           })}
         </ul>
         <div className="flex items-center justify-center gap-2 border-t border-border/60 p-4">
+          <ThemeToggle />
           {user ? (
             <Button
               className="w-full rounded-full btn-gradient cursor-pointer"

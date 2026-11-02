@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import Navbar from "@/components/layout/Navbar";
 import { Toaster } from 'react-hot-toast'
 import Footer from "@/components/layout/Footer";
+import { ThemeProvider } from "next-themes";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -25,6 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={cn(
         "h-full",
         "antialiased",
@@ -34,9 +36,16 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       )}
     >
       <body suppressHydrationWarning className="min-h-full flex flex-col">
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </ThemeProvider>
         <Toaster position="top-right" />
       </body>
     </html>

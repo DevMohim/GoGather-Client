@@ -11,7 +11,7 @@ const MyEventCardSkeleton = () => {
       <div className="relative aspect-video overflow-hidden">
         <Skeleton className="absolute inset-0 rounded-none" />
         {/* Date plate */}
-        <Skeleton className="absolute top-4 left-4 h-[60px] w-14 rounded-2xl" />
+        <Skeleton className="absolute top-4 left-4 h-15 w-14 rounded-2xl" />
         {/* Event type badge */}
         <Skeleton className="absolute top-4 right-4 h-6 w-20 rounded-full" />
       </div>
@@ -42,7 +42,7 @@ const MyEventCardSkeleton = () => {
 
       {/* Actions */}
       <div className="flex items-center justify-end gap-2 px-6 pb-6">
-        <Skeleton className="h-8 w-[118px] rounded-lg" />
+        <Skeleton className="h-8 w-30 rounded-lg" />
         <Skeleton className="size-8 rounded-lg" />
         <Skeleton className="size-8 rounded-lg" />
       </div>

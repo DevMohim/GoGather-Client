@@ -2,6 +2,9 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
+/* Design tokens — light (default) and dark (green-tinted) themes.
+   Theme class is toggled on <html> by next-themes. */
+
 @theme {
   --font-primary: var(--font-inter);
   --font-secondary: var(--font-space-grotesk);
@@ -9,7 +12,7 @@
   --color-primery: #176b5b;
   --color-secondery: #c6531b;
   --color-dark: #26332f;
-  --color-bg: #f7f8f5;
+  --color-bg: var(--page-bg);
 }
 
 .logo-gradient {
@@ -81,6 +84,8 @@
 }
 
 :root {
+  color-scheme: light;
+  --page-bg: #f7f8f5;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
@@ -116,24 +121,26 @@
 }
 
 .dark {
-  --background: oklch(0.145 0 0);
+  color-scheme: dark;
+  --page-bg: #0f1714;
+  --background: oklch(0.163 0.018 170);
   --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
+  --card: oklch(0.204 0.02 170);
   --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
+  --popover: oklch(0.204 0.02 170);
   --popover-foreground: oklch(0.985 0 0);
   --primary: oklch(0.922 0 0);
   --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
+  --secondary: oklch(0.262 0.019 170);
   --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
+  --muted: oklch(0.253 0.018 170);
   --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
+  --accent: oklch(0.262 0.019 170);
   --accent-foreground: oklch(0.985 0 0);
   --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --border: oklch(0.95 0.02 170 / 12%);
+  --input: oklch(0.95 0.02 170 / 16%);
+  --ring: oklch(0.66 0.05 170);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);

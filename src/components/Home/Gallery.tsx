@@ -78,10 +78,10 @@ const Gallery = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Heading */}
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-dark font-secondary sm:text-4xl">
+          <h2 className="text-3xl font-bold tracking-tight text-foreground font-secondary sm:text-4xl">
             Moments from our events
           </h2>
-          <p className="mt-4 text-neutral-400">
+          <p className="mt-4 text-muted-foreground">
             A look back at the gatherings that brought people together and made
             a difference.
           </p>

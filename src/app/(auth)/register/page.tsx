@@ -92,12 +92,12 @@ export default function RegisterPage() {
   }
   return (
     <section className="bg-bg pb-8 pt-2 lg:pb-20">
-      <div className="w-lg bg-white mx-auto mt-20 p-6 border rounded-xl">
+      <div className="w-lg bg-card border border-border mx-auto mt-20 p-6 rounded-xl">
         <Image src={Logo} alt="logo" width={40} height={40}></Image>
 
         <h1 className="text-2xl font-bold font-secondary">Create Account</h1>
 
-        <p className="mt-1 mb-5 text-sm text-stone-500">
+        <p className="mt-1 mb-5 text-sm text-muted-foreground">
           Enter your information to become part of our community.
         </p>
 
@@ -258,15 +258,15 @@ export default function RegisterPage() {
           </button>
         </form>
         <div className="my-6 flex items-center gap-3">
-          <span className="h-px flex-1 bg-stone-200" />
-          <span className="text-sm text-stone-500">or continue with</span>
-          <span className="h-px flex-1 bg-stone-200" />
+          <span className="h-px flex-1 bg-border" />
+          <span className="text-sm text-muted-foreground">or continue with</span>
+          <span className="h-px flex-1 bg-border" />
         </div>
 
         <button
           type="button"
           onClick={handleGoogleLogin}
-          className="flex w-full items-center justify-center gap-3 rounded-lg border border-stone-300 bg-white px-4 py-2.5 text-sm font-medium text-stone-700 transition hover:bg-stone-50 focus:outline-none focus:ring-2 focus:ring-stone-400 focus:ring-offset-2 cursor-pointer"
+          className="flex w-full items-center justify-center gap-3 rounded-lg border border-border bg-background px-4 py-2.5 text-sm font-medium text-foreground transition hover:bg-muted focus:outline-none focus:ring-2 focus:ring-ring/50 cursor-pointer"
         >
           <svg className="h-5 w-5" viewBox="0 0 48 48" aria-hidden="true">
             <path
@@ -289,11 +289,11 @@ export default function RegisterPage() {
           Continue with Google
         </button>
 
-        <p className="mt-8 text-center text-sm text-stone-600">
+        <p className="mt-8 text-center text-sm text-muted-foreground">
           Already have an account?{" "}
           <Link
             href="/login"
-            className="font-medium text-dark hover:text-primery hover:underline"
+            className="font-medium text-foreground hover:text-primery hover:underline"
           >
             Login
           </Link>
