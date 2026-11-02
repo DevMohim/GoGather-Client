@@ -1,12 +1,17 @@
 import EventCard from "@/components/shared/EventCard";
-import {  Ticket, Compass, PlusCircle, } from "lucide-react";
+import { Ticket, Compass, PlusCircle } from "lucide-react";
 import { IEvent } from "@/types/Events.type";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import BacktoHomepageBtn from "@/components/shared/BacktoHomepageBtn";
 
-const UpcomingEventPage = async () => {
-
+const UpcomingEventPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ type?: string }>;
+}) => {
+  const { type } = await searchParams;
+  const selectedType = type ?? "all";
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/events`);
   const events = (await res.json()) as IEvent[];
@@ -14,34 +19,41 @@ const UpcomingEventPage = async () => {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const sortedEvents = Array.isArray(events)
+  
+  const upcomingEvents = Array.isArray(events)
     ? events
-        .filter(
-          (event) => new Date(`${event.eventDate}T00:00:00`) >= today
+        .filter((event) => new Date(`${event.eventDate}T00:00:00`) >= today)
+        .sort(
+          (a, b) =>
+            new Date(`${a.eventDate}T00:00:00`).getTime() -
+            new Date(`${b.eventDate}T00:00:00`).getTime(),
         )
-        .sort((a, b) => {
-          const dateA = new Date(`${a.eventDate}T00:00:00`).getTime();
-          const dateB = new Date(`${b.eventDate}T00:00:00`).getTime();
-
-          return dateA - dateB;
-        })
     : [];
-  const uniqueTypes = new Set(
-    sortedEvents.map((event) => event.eventType?.trim()).filter(Boolean)
-  );
+
+  
+  const uniqueTypes = Array.from(
+    new Set(
+      upcomingEvents.map((event) => event.eventType?.trim()).filter(Boolean),
+    ),
+  ) as string[];
+
+  
+  const filteredEvents =
+    selectedType === "all"
+      ? upcomingEvents
+      : upcomingEvents.filter(
+          (event) => event.eventType?.trim() === selectedType,
+        );
 
   return (
     <main className="relative overflow-hidden bg-bg">
-      
-
       {/* back to homepage btn */}
       <BacktoHomepageBtn />
 
-
       {/* Headings */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between px-8 py-4">
+      <div className="flex flex-col gap-4 px-8 py-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight font-secondary">
+          <h1 className="font-secondary text-3xl font-bold tracking-tight">
             Upcoming Events
           </h1>
           <p className="mt-2 max-w-xl text-muted-foreground">
@@ -53,7 +65,7 @@ const UpcomingEventPage = async () => {
           <Link href="/create-event">
             <Button
               size="lg"
-              className="w-full sm:w-auto btn-gradient cursor-pointer"
+              className="btn-gradient w-full cursor-pointer sm:w-auto"
             >
               <PlusCircle className="mr-2 h-5 w-5" /> Create Event
             </Button>
@@ -65,23 +77,38 @@ const UpcomingEventPage = async () => {
       <section className="container mx-auto px-4 pb-24 sm:px-6 lg:px-8">
         <div className="flex flex-col gap-4 border-b border-border/60 pb-6 sm:flex-row sm:items-end sm:justify-between">
           <div className="flex w-full flex-wrap items-center justify-center gap-2">
-            <span className="inline-flex h-8 items-center rounded-full bg-foreground px-4 text-xs font-semibold tracking-wide text-background uppercase">
+            {/* All */}
+            <Link
+              href="/upcoming-event"
+              className={`inline-flex h-8 items-center rounded-full px-4 text-xs tracking-wide uppercase transition-colors ${
+                selectedType === "all"
+                  ? "bg-foreground font-semibold text-background"
+                  : "border border-border/70 bg-background/60 font-medium text-muted-foreground backdrop-blur hover:border-foreground/30 hover:text-foreground"
+              }`}
+            >
               All
-            </span>
-            {Array.from(uniqueTypes).map((type) => (
-              <span
+            </Link>
+
+            
+            {uniqueTypes.map((type) => (
+              <Link
                 key={type}
-                className="inline-flex h-8 items-center rounded-full border border-border/70 bg-background/60 px-4 text-xs font-medium tracking-wide text-muted-foreground uppercase backdrop-blur transition-colors hover:border-foreground/30 hover:text-foreground"
+                href={`/upcoming-event?type=${encodeURIComponent(type)}`}
+                className={`inline-flex h-8 items-center rounded-full px-4 text-xs tracking-wide uppercase transition-colors ${
+                  selectedType === type
+                    ? "bg-foreground font-semibold text-background"
+                    : "border border-border/70 bg-background/60 font-medium text-muted-foreground backdrop-blur hover:border-foreground/30 hover:text-foreground"
+                }`}
               >
                 {type}
-              </span>
+              </Link>
             ))}
           </div>
         </div>
 
-        {sortedEvents.length > 0 ? (
+        {filteredEvents.length > 0 ? (
           <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-8">
-            {sortedEvents.map((event) => (
+            {filteredEvents.map((event) => (
               <EventCard key={event._id} event={event} />
             ))}
           </div>
