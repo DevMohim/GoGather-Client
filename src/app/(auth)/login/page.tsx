@@ -21,12 +21,16 @@ const LoginPage = () => {
       password: string;
     };
 
-    const { data } = await signIn.email(userData);
+    const { data , error } = await signIn.email(userData);
+    if(error){
+      toast.error('Invalid Email or Password')
+    }
     if (data) {
       toast.success("Successfully logged in");
       form.reset();
       router.push("/");
     }
+    
   };
 
   const handleGoogleLogin = async () => {
